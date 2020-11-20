@@ -1,0 +1,18 @@
+version: "3"
+services:
+  node:
+    build: api/.
+    volumes:
+      - ./api:/api
+    working_dir: /api
+    command: ["npm", "start"]
+    ports:
+      - "3000:3000"
+  vue:
+    build: public/.
+    volumes:
+      - ./public:/public
+    working_dir: /public/frontapp
+    command: ["npm", "run", "serve"]
+    ports:
+      - "8080:8080"
