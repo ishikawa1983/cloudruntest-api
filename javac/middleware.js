@@ -14,38 +14,6 @@
 
 const {logger} = require('./logging'); // Import winston logger instance
 
-// [START cloudrun_user_auth_jwt]
-// [START run_user_auth_jwt]
-const firebase = require('firebase-admin');
-// Initialize Firebase Admin SDK
-firebase.initializeApp();
-
-// Extract and verify Id Token from header
-const authenticateJWT = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
-    // If the provided ID token has the correct format, is not expired, and is
-    // properly signed, the method returns the decoded ID token
-    firebase
-      .auth()
-      .verifyIdToken(token)
-      .then(decodedToken => {
-        const uid = decodedToken.uid;
-        req.uid = uid;
-        next();
-      })
-      .catch(err => {
-        req.logger.error(`Error with authentication: ${err}`);
-        return res.sendStatus(403);
-      });
-  } else {
-    return res.sendStatus(401);
-  }
-};
-// [END run_user_auth_jwt]
-// [END cloudrun_user_auth_jwt]
-
 let project;
 const initTracing = projectId => {
   project = projectId;
@@ -65,7 +33,6 @@ const requestLogger = (req, res, next) => {
 };
 
 module.exports = {
-  authenticateJWT,
   requestLogger,
   initTracing,
 };
