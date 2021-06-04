@@ -21,7 +21,7 @@ router.post('/', function(req, res, next) {
   var cmd = 'javac JavaTest.java';
   var ret = {};
   require('child_process').exec(cmd, { encoding: 'Shift_JIS' }, (err, stdout, stderr) => {
-    if (stderr) {
+    if (stderr && stderr.length > 0) {
       ret.error = toString(stderr);
       res.send(JSON.stringify(ret));
     } else {
