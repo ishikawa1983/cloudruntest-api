@@ -3,13 +3,13 @@ const fs = require("fs");
 const encoding = require('encoding-japanese');
 const router = express.Router();
 
-const toString = (bytes) => {
+/*const toString = (bytes) => {
   return encoding.convert(bytes, {
     from: 'SJIS',
     to: 'UNICODE',
     type: 'string',
   });
-};
+};*/
 
 router.post('/', function(req, res, next) {
   try {
@@ -18,11 +18,11 @@ router.post('/', function(req, res, next) {
   } catch(e) {
     console.log(e);
   }
-  var cmd = 'javac -encoding UTF-8 JavaTest.java';
+  var cmd = 'javac -encoding UTF-8 -Duser.language=ja -Duser.country=JP JavaTest.java';
   var ret = {};
-  require('child_process').exec(cmd, { encoding: 'Shift_JIS' }, (err, stdout, stderr) => {
+  require('child_process').exec(cmd, (err, stdout, stderr) => {
     if (stderr && stderr.length > 0) {
-      ret.error = toString(stderr);
+      ret.error = stderr;
       res.send(JSON.stringify(ret));
     } else {
       cmd = 'java JavaTest';
