@@ -18,7 +18,7 @@ router.post('/', function(req, res, next) {
   } catch(e) {
     console.log(e);
   }
-  var cmd = 'javac JavaTest.java';
+  var cmd = 'javac -encoding UTF-8 JavaTest.java';
   var ret = {};
   require('child_process').exec(cmd, { encoding: 'Shift_JIS' }, (err, stdout, stderr) => {
     if (stderr && stderr.length > 0) {
