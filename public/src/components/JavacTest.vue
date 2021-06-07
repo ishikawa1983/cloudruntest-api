@@ -33,8 +33,7 @@ public class JavaTest {
     //  .forEach(i -> System.out.println(i));
 
   }
-}
-      `
+}`
       ,
       output: ""
     }
